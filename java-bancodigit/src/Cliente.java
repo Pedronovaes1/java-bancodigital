@@ -1,11 +1,9 @@
 public class Cliente {
     //atributo
     private String nome;
-    private String cpf;
 
-    public Cliente() {
+    public Cliente(String nome) {
         this.nome = nome;
-        this.cpf = cpf;
     }
 
     public String getNome() {
@@ -16,19 +14,10 @@ public class Cliente {
         this.nome = nome;
     }
 
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public void verificarCpf(String cpf){
-        if(cpf.length() == 8){
-            this.cpf = cpf;
-        }else{
-            System.out.println("CPF inválido");
-        }
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "nome='" + nome + '\'' +
+                '}';
     }
 }

@@ -1,21 +1,19 @@
-public abstract class Conta {
+public class Conta {
 
-    private static int AGENCIA_PADRAO = 1;
-    private static int SEQUENCIAL = 1;
-
+    protected static int SEQUENCIAL = 1;
     //atributos
     protected int agencia;
-    protected int numero;
-    protected double saldo;
+    private int numero;
+    private double saldo;
     private Cliente cliente;
 
     //contrutor, geterres
 
-    public Conta() {
-        this.agencia = Conta.AGENCIA_PADRAO;
+    public Conta(double saldo, Cliente cliente) {
+        this.agencia = 1 ;
         this.numero = SEQUENCIAL++;
         this.saldo = saldo;
-        this.cliente = cliente;
+        this.cliente = new Cliente(cliente.getNome());
     }
 
     public int getAgencia() {
@@ -34,6 +32,16 @@ public abstract class Conta {
         return cliente;
     }
 
+    @Override
+    public String toString() {
+        return "Conta{" +
+                "agencia=" + agencia +
+                ", numero=" + numero +
+                ", saldo=" + saldo +
+                ", cliente=" + cliente +
+                '}';
+    }
+
     //métodos
     public void sacar(double valor){
         if (saldo == 0) {
@@ -46,13 +54,22 @@ public abstract class Conta {
         }
     }
 
-    public void depositar(double valor){
+    public String depositar(double valor){
         this.saldo += valor;
+        return "o saldo ficou: " + this.saldo;
     }
 
     public void trasferir(double valor, Conta contaDestino){
-        this.sacar(valor);
-        contaDestino.depositar(valor);
+        if(saldo == 0){
+            System.out.println("Não tem commo transferir, sem saldo");
+        }else if(saldo < 0){
+            System.out.println("Saldo negativo, não pode transferir");
+        }else if(saldo < valor){
+            System.out.println("Saldo insuficente");
+        }else{
+            this.sacar(valor);
+            contaDestino.depositar(valor);
+        }
     }
 
     public void imprimirExtrato(){
@@ -61,4 +78,6 @@ public abstract class Conta {
         System.out.println("Numero: "+ this.numero) ;
         System.out.println("Saldo: " + this.saldo);
     }
+
+
 }
